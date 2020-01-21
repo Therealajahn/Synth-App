@@ -1,0 +1,16 @@
+body{
+    background-color: #000;
+}
+
+#play-button{
+    border-left: 100px solid #fff;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid
+        transparent;
+}
+
+#play-toggle{
+    height: 100px;
+    width: 100px;
+    
+}
