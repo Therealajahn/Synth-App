@@ -4,38 +4,36 @@
 
 
 
-document.querySelector('#play-button').addEventListener('mousedown',function(){
+document.querySelector('#play-button').addEventListener('click',function(){
     
     
     if (Tone.context.state !== 'running'){
         Tone.context.resume();
+        console.log("context running");
     }
-    const synth = new Tone.MetalSynth().toMaster();
-
-    synth.triggerAttackRelease("C4", "4n");
    
 })
 
-//Song
-var synth = new Tone.Synth().toMaster()
+//Oscillators
+//control relative pitch of oscillators
+//button to change waveshape
+//connect to filter
 
-//pass in an array of events
-var part = new Tone.Part(function(time, event){
-	//the events will be given to the callback with the time they occur
-	synth.triggerAttackRelease(event.note, event.dur, time)
-}, [{ time : 0, note : 'C4', dur : '4n'},
-	{ time : {'4n' : 1, '8n' : 1}, note : 'E4', dur : '8n'},
-	{ time : '2n', note : 'G4', dur : '16n'},
-	{ time : {'2n' : 1, '8t' : 1}, note : 'B4', dur : '4n'}])
+//buttons trigger synth
+let key = document.querySelector('#c\\#').addEventListener("click",clickKeys);
 
-//start the part at the beginning of the Transport's timeline
-part.start(0)
+function clickKeys(){
+    console.log("key clicked!");
+    const synth = new Tone.MetalSynth().toMaster();
 
-//loop the part 3 times
-part.loop = 3
-part.loopEnd = '1m'
+    synth.triggerAttackRelease("C4", "4n");
+}
+//buttons change abs pitch of oscillators
+//sixteen keys control abs pitch of osccillators
 
-document.querySelector('#play-toggle').addEventListener('change', e => Tone.Transport.toggle())
+
+
+
 
 
 
