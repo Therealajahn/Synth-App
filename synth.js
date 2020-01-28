@@ -14,10 +14,10 @@
 //Setup filter
     let filter = new Tone.Filter({
         type : 'lowpass' ,
-        frequency : 350 ,
+        frequency : 300 ,
         rolloff : -12 ,
-        Q : 1 ,
-        gain : 0
+        Q : 10,
+        gain : -5
     }).connect(gain);
 //Setup env   
     let env = new Tone.AmplitudeEnvelope({
@@ -28,7 +28,11 @@
         }).connect(filter);
   
  //Setup filter env      
-   
+    // let filtEnv = new Tone.Envelope({
+    //     "baseFrequency" : 500 ,
+    //     "octaves" : 10 ,
+    //     "exponent" : 10,
+    // }).connect(filter.frequency);
 //Setup oscs
    
     let osc1 = new Tone.Oscillator(440,"square").connect(env).start();
@@ -41,37 +45,6 @@ const sound = {
     osc3: osc3,
     env: env
 }
-
-
-//buttons trigger synth
-
-    
-document.addEventListener("mousedown",()=>{
-        if(event.target.className.baseVal === "key"){
-       buttonTriggerSynth(1,sound,event.target.id)
-        }
-    });
-
-document.addEventListener("mouseup",()=>buttonTriggerSynth(0,sound));
-
-
-
-function buttonTriggerSynth(gate,sound,note){
-    const { osc1, osc2, osc3, env } = sound;
-    if(gate){.
-        
-        osc1.frequency.value = note;
-        osc2.frequency.value = osc1.frequency.value + 5;
-        osc3.frequency.value = osc1.frequency.value - 5;
-        
-        env.triggerAttack();
-        
-        
-    }else if (!gate){
-        env.triggerRelease();
-    }
-}
-
 //Define keys to use for keyboard
 const keyboard = {
     //bottom row
@@ -113,27 +86,44 @@ const keyboard = {
 }
 
 
-document.addEventListener("keydown",()=>keyTriggerSynth(1,sound,keyboard,event.key))
 
-document.addEventListener("keyup",()=>keyTriggerSynth(0,sound,keyboard,event.key))
+//buttons trigger synth
 
-function keyTriggerSynth(gate,sound,keyboard,key){
-    console.log(key);
-    const { osc1, osc2, osc3, env } = sound;
     
-    if(gate && keyboard[key]){
-        
-        osc1.frequency.value = keyboard[key];
-        osc2.frequency.value = osc1.frequency.value;
-        osc3.frequency.value = osc1.frequency.value;
-        
-        env.triggerAttack();
-        
-        
+document.addEventListener("mousedown",()=>{
+        if(event.target.className.baseVal === "key"){
+       buttonTriggerSynth(1,sound,event.target.id)
+        }
+    });
+
+document.addEventListener("mouseup",()=>buttonTriggerSynth(0,sound));
+
+document.addEventListener("keydown",()=>buttonTriggerSynth(1,sound,keyboard[event.key],event.key))
+
+document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.key],event.key))
+
+      
+function updateOscs(note,sound) {
+    const {osc1, osc2, osc3} = sound
+    osc1.frequency.value = note;
+    osc2.frequency.value = osc1.frequency.value;
+    osc3.frequency.value = osc1.frequency.value;
+}
+
+function buttonTriggerSynth(gate,sound,note,key){
+    const { env } = sound;
+    
+    if(gate){
+       if(key){
+           updateOscs(keyboard[key],sound)
+       }
+        updateOscs(note,sound);
+       env.triggerAttack();
     }else if (!gate){
         env.triggerRelease();
     }
 }
+
 
 
 //control relative pitch of oscillators
