@@ -1,7 +1,6 @@
 body{
     background-color: red;
 }
-
 #play-button{
     border-left: 100px solid #fff;
     border-top: 50px solid transparent;
@@ -13,4 +12,7 @@ body{
     height: 100px;
     width: 100px;
     
+}
+#volca-bass-container{
+    text-align: center;
 }
