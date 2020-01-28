@@ -10,29 +10,33 @@
 
 //setup Sound
 //Setup volume
-    let gain = new Tone.Gain(0.1).toMaster();
+    let gain = new Tone.Gain(1).toMaster();
 //Setup filter
     let filter = new Tone.Filter({
-        type : 'lowpass' ,
-        frequency : 300 ,
-        rolloff : -12 ,
-        Q : 10,
-        gain : -5
+        type : 'lowpass',
+        frequency : 100,
+        rolloff : -24,
+        Q : 12,
+        gain : 0
     }).connect(gain);
 //Setup env   
     let env = new Tone.AmplitudeEnvelope({
-            "attack" : 0.01,
-			"decay" : 0.01,
-			"sustain" : 1,
-			"release" : 5
-        }).connect(filter);
+        "attack" : 0.01,
+		"decay" : 0.01,
+		"sustain" : 1,
+		"release" : 2
+    }).connect(filter);
   
  //Setup filter env      
-    // let filtEnv = new Tone.Envelope({
-    //     "baseFrequency" : 500 ,
-    //     "octaves" : 10 ,
-    //     "exponent" : 10,
-    // }).connect(filter.frequency);
+    let filtEnv = new Tone.FrequencyEnvelope({
+        "attack" : 0.001,
+		"decay" : 0.01,
+		"sustain" : 1,
+		"release" : 2,
+        "baseFrequency" : 300,
+        "octaves" : 1,
+        "exponent" : 1,
+    }).connect(filter.frequency);
 //Setup oscs
    
     let osc1 = new Tone.Oscillator(440,"square").connect(env).start();
@@ -104,10 +108,10 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.
 
       
 function updateOscs(note,sound) {
-    const {osc1, osc2, osc3} = sound
+    const { osc1, osc2, osc3 } = sound
     osc1.frequency.value = note;
-    osc2.frequency.value = osc1.frequency.value;
-    osc3.frequency.value = osc1.frequency.value;
+    osc2.frequency.value = osc1.frequency.value + 1;
+    osc3.frequency.value = osc1.frequency.value - 1;
 }
 
 function buttonTriggerSynth(gate,sound,note,key){
@@ -119,8 +123,10 @@ function buttonTriggerSynth(gate,sound,note,key){
        }
         updateOscs(note,sound);
        env.triggerAttack();
+       filtEnv.triggerAttack();
     }else if (!gate){
         env.triggerRelease();
+        filtEnv.triggerRelease();
     }
 }
 
