@@ -1,12 +1,12 @@
 
 
-function startAudioContext(){    
-    document.querySelector('#play-button').addEventListener('click', async () =>{
-            await Tone.start()
-    })
-}
+//function startAudioContext(){    
+//    document.querySelector('#play-button').addEventListener('click', async () =>{
+//            await Tone.start()
+//    })
+//}
 
-startAudioContext();
+//startAudioContext();
 
 //setup Sound
 //Setup volume
@@ -25,7 +25,7 @@ startAudioContext();
     let osc2 = new Tone.Oscillator(440, "square").connect(env).start();
     let osc3 = new Tone.Oscillator(440, "square").connect(env).start();
 
-let sound = {
+const sound = {
     osc1: osc1,
     osc2: osc2,
     osc3: osc3,
