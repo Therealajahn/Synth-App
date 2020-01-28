@@ -10,13 +10,13 @@
 
 //setup Sound
 //Setup volume
-    let gain = new Tone.Gain(1).toMaster();
+    let gain = new Tone.Gain(0.1).toMaster();
 //Setup filter
     let filter = new Tone.Filter({
         type : 'lowpass',
         frequency : 100,
         rolloff : -24,
-        Q : 12,
+        Q : 10,
         gain : 0
     }).connect(gain);
 //Setup env   
@@ -31,17 +31,17 @@
     let filtEnv = new Tone.FrequencyEnvelope({
         "attack" : 0.001,
 		"decay" : 0.01,
-		"sustain" : 1,
+		"sustain" : 0.5,
 		"release" : 2,
-        "baseFrequency" : 300,
+        "baseFrequency" : 200,
         "octaves" : 1,
         "exponent" : 1,
     }).connect(filter.frequency);
 //Setup oscs
    
-    let osc1 = new Tone.Oscillator(440,"square").connect(env).start();
-    let osc2 = new Tone.Oscillator(440, "square").connect(env).start();
-    let osc3 = new Tone.Oscillator(440, "square").connect(env).start();
+    let osc1 = new Tone.Oscillator(440,"sawtooth").connect(env).start();
+    let osc2 = new Tone.Oscillator(440, "sawtooth").connect(env).start();
+    let osc3 = new Tone.Oscillator(440, "sawtooth").connect(env).start();
 
 const sound = {
     osc1: osc1,
@@ -111,7 +111,7 @@ function updateOscs(note,sound) {
     const { osc1, osc2, osc3 } = sound
     osc1.frequency.value = note;
     osc2.frequency.value = osc1.frequency.value + 1;
-    osc3.frequency.value = osc1.frequency.value - 1;
+    osc3.frequency.value = osc1.frequency.value + 1;
 }
 
 function buttonTriggerSynth(gate,sound,note,key){
