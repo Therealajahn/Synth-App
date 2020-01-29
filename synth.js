@@ -10,13 +10,13 @@
 
 //setup Sound
 //Setup volume
-    let gain = new Tone.Gain(0.1).toMaster();
+    let gain = new Tone.Gain(0.05).toMaster();
 //Setup filter
     let filter = new Tone.Filter({
         type : 'lowpass',
         frequency : 100,
-        rolloff : -24,
-        Q : 10,
+        rolloff : -12,
+        Q : 20,
         gain : 0
     }).connect(gain);
 //Setup env   
@@ -24,7 +24,7 @@
         "attack" : 0.01,
 		"decay" : 0.01,
 		"sustain" : 1,
-		"release" : 2
+		"release" : 5
     }).connect(filter);
   
  //Setup filter env      
@@ -33,8 +33,8 @@
 		"decay" : 0.01,
 		"sustain" : 0.5,
 		"release" : 2,
-        "baseFrequency" : 200,
-        "octaves" : 1,
+        "baseFrequency" : 250,
+        "octaves" : 2,
         "exponent" : 1,
     }).connect(filter.frequency);
 //Setup oscs
@@ -49,45 +49,7 @@ const sound = {
     osc3: osc3,
     env: env
 }
-//Define keys to use for keyboard
-const keyboard = {
-    //bottom row
-    z: "c1",
-    s: "c#1",
-    x: "d1",
-    d: "d#1",
-    c: "e1",
-    v: "f1",
-    g: "f#1",
-    b: "g1",
-    h: "g#1",
-    n: "a1",
-    j: "a#1",
-    m: "b1",
-    ',': "c2",
-    l: "c#2",
-    '.': "d2",
-    ';': "d#2",
-    '/': "e2",
-     //top row
-     q: "c2",
-     2: "c#2",
-     w: "d2",
-     3: "d#2",
-     e: "e2",
-     r: "f2",
-     5: "f#2",
-     t: "g2",
-     6: "g#2",
-     y: "a2",
-     7: "a#2",
-     u: "b2",
-     i: "c3",
-     9: "c#3",
-     o: "d3",
-     0: "d#3",
-     p: "e3",
-}
+
 
 
 
@@ -110,8 +72,8 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.
 function updateOscs(note,sound) {
     const { osc1, osc2, osc3 } = sound
     osc1.frequency.value = note;
-    osc2.frequency.value = osc1.frequency.value + 1;
-    osc3.frequency.value = osc1.frequency.value + 1;
+    osc2.frequency.value = osc1.frequency.value + 5;
+    osc3.frequency.value = osc1.frequency.value - 5;
 }
 
 function buttonTriggerSynth(gate,sound,note,key){
@@ -129,6 +91,36 @@ function buttonTriggerSynth(gate,sound,note,key){
         filtEnv.triggerRelease();
     }
 }
+//Rotate knob when cliked based on mouse distance
+let filterKnob = document.getElementsByClassName("filter-knob");
+
+let knobClicked = false;
+//detect if mouse held down or not on knob
+filterKnob[0].addEventListener("mousedown", () => {
+    knobClicked = true;
+    document.addEventListener("mousemove", () => {
+        console.log("x",event.clientX);
+        console.log("y:",event.clientY);
+    })
+});
+filterKnob[1].addEventListener("mousedown", () => {
+    knobClicked = true;
+});
+
+filterKnob[0].addEventListener("mouseup", () => {
+    knobClicked = false;
+    console.log(knobClicked);
+});
+filterKnob[1].addEventListener("mouseup", ()=> {
+    knobClicked = false;
+});
+//if mouse held down, get mouse x and y
+if(knobClicked){
+    console.log("if",knobClicked);
+    
+}
+ 
+ 
 
 
 
