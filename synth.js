@@ -103,22 +103,20 @@ filterKnob[0].addEventListener("mousedown", () => {
         console.log("y:",event.clientY);
     })
 });
-filterKnob[1].addEventListener("mousedown", () => {
-    knobClicked = true;
-});
 
-filterKnob[0].addEventListener("mouseup", () => {
-    knobClicked = false;
-    console.log(knobClicked);
-});
-filterKnob[1].addEventListener("mouseup", ()=> {
-    knobClicked = false;
-});
-//if mouse held down, get mouse x and y
+
 if(knobClicked){
-    console.log("if",knobClicked);
+    document.addEventListener("mouseup", () => {
     
+        console.log(knobClicked);
+        document.removeEventListener("mousemove", () => {
+            console.log("x",event.clientX);
+            console.log("y:",event.clientY);
+        })
+    });
 }
+
+s
  
  
 
