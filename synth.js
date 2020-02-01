@@ -39,9 +39,9 @@
     }).connect(filter.frequency);
 //Setup oscs
    
-    let osc1 = new Tone.Oscillator(440,"sawtooth").connect(env).start();
-    let osc2 = new Tone.Oscillator(440, "sawtooth").connect(env).start();
-    let osc3 = new Tone.Oscillator(440, "sawtooth").connect(env).start();
+    let osc1 = new Tone.Oscillator(440,"square").connect(env).start();
+    let osc2 = new Tone.Oscillator(440, "square").connect(env).start();
+    let osc3 = new Tone.Oscillator(440, "square").connect(env).start();
 
 const sound = {
     osc1: osc1,
@@ -72,8 +72,8 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.
 function updateOscs(note,sound) {
     const { osc1, osc2, osc3 } = sound
     osc1.frequency.value = note;
-    osc2.frequency.value = osc1.frequency.value + 5;
-    osc3.frequency.value = osc1.frequency.value - 5;
+    osc2.frequency.value = osc1.frequency.value + 1;
+    osc3.frequency.value = osc1.frequency.value - 1;
 }
 
 function buttonTriggerSynth(gate,sound,note,key){
