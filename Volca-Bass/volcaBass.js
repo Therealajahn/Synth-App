@@ -1,5 +1,5 @@
 let container = document.getElementById("volca-bass-container");
-container.innerHTML = `<svg width="571" height="334" viewBox="435 345 571 334" fill="none" xmlns="http://www.w3.org/2000/svg">
+container.insertAdjacentHTML( "beforeend", `<svg id="volca-bass" width="571" height="334" viewBox="435 345 571 334" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <rect x="435" y="345" width="571" height="334" fill="#010101"/>
 <rect x="440" y="351" width="558" height="205" fill="#9D9D9D"/>
@@ -63,4 +63,4 @@ container.innerHTML = `<svg width="571" height="334" viewBox="435 345 571 334" f
 <path d="M435.21 569.5L449.5 584.5V649.5L435.21 678.5V569.5Z" fill="#C4C4C4"/>
 <path d="M706 647.5L991 648.5L1006 679H434.5L448.5 648.5L706 647.5Z" fill="#6F6F6F"/>
 <path d="M702.5 562H1005.53V570.5L991.516 585H450.531L435.031 571V562H702.5Z" fill="#414141"/>
-</svg>`
+</svg>`);

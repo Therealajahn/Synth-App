@@ -91,31 +91,24 @@ function buttonTriggerSynth(gate,sound,note,key){
         filtEnv.triggerRelease();
     }
 }
-//Rotate knob when cliked based on mouse distance
-let filterKnob = document.getElementsByClassName("filter-knob");
-
-let knobClicked = false;
-//detect if mouse held down or not on knob
-filterKnob[0].addEventListener("mousedown", () => {
-    knobClicked = true;
-    document.addEventListener("mousemove", () => {
-        console.log("x",event.clientX);
-        console.log("y:",event.clientY);
-    })
-});
 
 
-if(knobClicked){
-    document.addEventListener("mouseup", () => {
+let cutoff = document.getElementById('cutoff-range');
+
+cutoff.addEventListener("input",()=>{
+    let filterKnob1 = document.getElementsByClassName('filter-knob')[0]; 
+    let filterKnob2 = document.getElementsByClassName('filter-knob')[1]; 
+    let angle = event.target.value;
+    filterKnob1.style.transform = `rotate(${angle}deg)`;
+    filterKnob2.style.transform = `rotate(${angle}deg)`;
+})
+
+   
     
-        console.log(knobClicked);
-        document.removeEventListener("mousemove", () => {
-            console.log("x",event.clientX);
-            console.log("y:",event.clientY);
-        })
-    });
-}
 
+
+
+//TODO; get knob drag to work!!!
 
  
  

@@ -1,7 +1,17 @@
 body{
-    display: grid;
-    background-color: #b1d0d8;
+    
+    background-color: #;
 }
+
+/* main{
+    display: grid;
+    grid-template-columns: 30vw 1fr 30vw;
+    grid-template-rows: 80vh 20vh;
+    grid-template-areas: 
+    "left middle right"
+    "left text right";
+} */
+
 #play-button{
     border-left: 100px solid #fff;
     border-top: 50px solid transparent;
@@ -14,11 +24,47 @@ body{
     width: 100px;
     
 }
+
 #volca-bass-container{
-    text-align: center;
+    grid-area:  middle;
+    display: grid;
+    grid: 40% 60%;  
 }
 
-h1,h2 {
-    margin-left:auto;
-    margin-right: auto;
+#volca-bass {
+    width: 572px;
+    height: 334px;
+    display: grid;
+    grid: "face" 300px "keys" 1fr;
+}
+#volca-base{
+    grid-area: face;
+}
+#face-plate {
+    grid-area: face;
+    margin-left: 6px;
+}
+
+
+
+#slider-container{
+    display:grid;
+    grid: 100% / repeat(6, 1fr)
+
+}
+
+.slider{
+    width: 50px;
+    transform: rotate(90deg);
+}
+
+#filter-knob{
+    transform-origin: 50% 50%;
+}
+
+#text {
+    grid-area:text;
+    text-align: center;
+    align-self: end;
+    color: #fff;
 }
