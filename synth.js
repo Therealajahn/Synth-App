@@ -92,35 +92,48 @@ function buttonTriggerSynth(gate,sound,note,key){
     }
 }
 
-
-
-let filterKnob = document.getElementById('filter-knob'); 
-let store = {
-    value: 0,
+function getMouseDistance(x,y){
+    let distance = Math.sqrt(
+        Math.pow(x, 2) + 
+        Math.pow(y, 2));
+    
+    if(x < 0 && y < 0){
+        distance *= -1;
+    }
+    
+    
+    return distance;
 }
 
-filterKnob.onmousedown = () => {
+let filterKnob = document.getElementById('filter-knob');
+
+filterKnob.addEventListener("mousedown",(e)=>{
+    const pastX = e.pageX;
+    const pastY = e.pageY;
+    console.log("pastX:",pastX);
+    console.log("pastY:", pastY);
     let angle;
-    
-    function turnKnob(){
-        
-        let distance = event.pageX > event.pageY? event.pageX : event.pageY;
-        angle = store.value - (distance / 5);
-        console.log(angle);
-        if(angle > 235 && angle < 490){
-        filterKnob.style.transform = `rotate(${angle}deg)`;
-      
-        }
-    }
-    document.addEventListener("mousemove",turnKnob)
-    document.addEventListener("mouseup",() => { 
-        console.log('up');
-        store.value = angle;
-        document.removeEventListener("mousemove",turnKnob);
-    
+    document.addEventListener("mousemove",(e)=>{
+        let currentX = e.pageX;
+        let currentY = e.pageY;
+        console.log("currentX:",currentX);
+        console.log("currentY:",currentY);
+        let distanceX = currentX - pastX;
+        let distanceY = (currentY - pastY) * -1;
+        console.log("distanceX:",distanceX);
+        console.log("distanceY",distanceY);
+        let mouseDistance = getMouseDistance(distanceX,distanceY);
+        angle = mouseDistance; 
+        console.log("angle:",angle);
+        filterKnob.style.transform = `rotate(${angle}deg)`;                  
     },angle);
     
-};    
+
+});
+
+
+
+ 
 
 
 
