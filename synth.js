@@ -96,11 +96,16 @@ function buttonTriggerSynth(gate,sound,note,key){
 let cutoff = document.getElementById('cutoff-range');
 
 cutoff.addEventListener("input",()=>{
-    let filterKnob1 = document.getElementsByClassName('filter-knob')[0]; 
-    let filterKnob2 = document.getElementsByClassName('filter-knob')[1]; 
-    let angle = event.target.value;
-    filterKnob1.style.transform = `rotate(${angle}deg)`;
-    filterKnob2.style.transform = `rotate(${angle}deg)`;
+    let filterKnob = document.getElementById('filter-knob'); 
+    
+    let angle = event.target.value / 10;
+    console.log(angle);
+    filterKnob.style.transform = `rotate(${angle}deg)`;
+    
+})
+
+document.addEventListener("dragover",()=>{
+    console.log(event);
 })
 
    

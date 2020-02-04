@@ -1,16 +1,16 @@
 body{
     
-    background-color: #;
+    background-color: #fff;
 }
 
-/* main{
+main{
     display: grid;
     grid-template-columns: 30vw 1fr 30vw;
     grid-template-rows: 80vh 20vh;
     grid-template-areas: 
     "left middle right"
     "left text right";
-} */
+}
 
 #play-button{
     border-left: 100px solid #fff;
@@ -31,20 +31,41 @@ body{
     grid: 40% 60%;  
 }
 
+/* VOLCA BASS */
+
 #volca-bass {
     width: 572px;
     height: 334px;
     display: grid;
-    grid: "face" 300px "keys" 1fr;
+    grid: "face" 210px "keys" 1fr;
 }
 #volca-base{
     grid-area: face;
+   
 }
 #face-plate {
     grid-area: face;
     margin-left: 6px;
+    margin-top: 6px;
+    display: grid;
+    grid: "top" 100px "bottom" 1fr;
 }
 
+#main-knobs{
+   grid-area: "bottom";
+   display: grid;
+   grid: 100% / 60px 60px 90px 60px 60px 50px 50px 60px 50px; 
+   justify-items: center;
+   margin-left: 8px;
+}
+
+.osc-tune-knobs{
+    margin-top: 8px;
+}
+
+#filter-knob{
+    margin-top: -20px;
+}
 
 
 #slider-container{
@@ -58,9 +79,8 @@ body{
     transform: rotate(90deg);
 }
 
-#filter-knob{
-    transform-origin: 50% 50%;
-}
+
+
 
 #text {
     grid-area:text;
