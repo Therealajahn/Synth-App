@@ -1,17 +1,7 @@
 body{
-    
-    background-color: #fff;
-}
-
-main{
     display: grid;
-    grid-template-columns: 30vw 1fr 30vw;
-    grid-template-rows: 80vh 20vh;
-    grid-template-areas: 
-    "left middle right"
-    "left text right";
+    background-color: #b1d0d8;
 }
-
 #play-button{
     border-left: 100px solid #fff;
     border-top: 50px solid transparent;
@@ -24,67 +14,11 @@ main{
     width: 100px;
     
 }
-
 #volca-bass-container{
-    grid-area:  middle;
-    display: grid;
-    grid: 40% 60%;  
-}
-
-/* VOLCA BASS */
-
-#volca-bass {
-    width: 572px;
-    height: 334px;
-    display: grid;
-    grid: "face" 210px "keys" 1fr;
-}
-#volca-base{
-    grid-area: face;
-   
-}
-#face-plate {
-    grid-area: face;
-    margin-left: 6px;
-    margin-top: 6px;
-    display: grid;
-    grid: "top" 100px "bottom" 1fr;
-}
-
-#main-knobs{
-   grid-area: "bottom";
-   display: grid;
-   grid: 100% / 60px 60px 90px 60px 60px 50px 50px 60px 50px; 
-   justify-items: center;
-   margin-left: 8px;
-}
-
-.osc-tune-knobs{
-    margin-top: 8px;
-}
-
-#filter-knob{
-    margin-top: -20px;
-}
-
-
-#slider-container{
-    display:grid;
-    grid: 100% / repeat(6, 1fr)
-
-}
-
-.slider{
-    width: 50px;
-    transform: rotate(90deg);
-}
-
-
-
-
-#text {
-    grid-area:text;
     text-align: center;
-    align-self: end;
-    color: #fff;
+}
+
+h1,h2 {
+    margin-left:auto;
+    margin-right: auto;
 }
