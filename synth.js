@@ -93,20 +93,36 @@ function buttonTriggerSynth(gate,sound,note,key){
 }
 
 
-let cutoff = document.getElementById('cutoff-range');
 
-cutoff.addEventListener("input",()=>{
-    let filterKnob = document.getElementById('filter-knob'); 
-    
-    let angle = event.target.value / 10;
-    console.log(angle);
-    filterKnob.style.transform = `rotate(${angle}deg)`;
-    
-})
+let filterKnob = document.getElementById('filter-knob'); 
+let store = {
+    value: 0,
+}
 
-document.addEventListener("dragover",()=>{
-    console.log(event);
-})
+filterKnob.onmousedown = () => {
+    let angle;
+    
+    function turnKnob(){
+        
+        let distance = event.pageX > event.pageY? event.pageX : event.pageY;
+        angle = store.value - (distance / 5);
+        console.log(angle);
+        if(angle > 235 && angle < 490){
+        filterKnob.style.transform = `rotate(${angle}deg)`;
+      
+        }
+    }
+    document.addEventListener("mousemove",turnKnob)
+    document.addEventListener("mouseup",() => { 
+        console.log('up');
+        store.value = angle;
+        document.removeEventListener("mousemove",turnKnob);
+    
+    },angle);
+    
+};    
+
+
 
    
     
