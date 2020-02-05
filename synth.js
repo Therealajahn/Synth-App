@@ -60,6 +60,9 @@ document.addEventListener("mousedown",()=>{
         if(event.target.className.baseVal === "key"){
        buttonTriggerSynth(1,sound,event.target.id)
         }
+        if(event.target.className.baseVal === "knob"){
+            
+        }
     });
 
 document.addEventListener("mouseup",()=>buttonTriggerSynth(0,sound));
@@ -93,43 +96,49 @@ function buttonTriggerSynth(gate,sound,note,key){
 }
 
 function getMouseDistance(x,y){
-    let distance = Math.sqrt(
-        Math.pow(x, 2) + 
-        Math.pow(y, 2));
-    
-    if(x < 0 && y < 0){
-        distance *= -1;
+    // let distance = Math.sqrt(
+    //     Math.pow(x, 2) + 
+
+    //     Math.pow(y, 2));
+    let distance;
+
+    if(x < 0){
+        distance = x;
+    }
+    if(x > 0 && y < 0){
+        distance  = y;
     }
     
     
     return distance;
 }
 
+function turnKnob(e){
 let filterKnob = document.getElementById('filter-knob');
+let angle = 0;
 
-filterKnob.addEventListener("mousedown",(e)=>{
-    const pastX = e.pageX;
-    const pastY = e.pageY;
-    console.log("pastX:",pastX);
-    console.log("pastY:", pastY);
-    let angle;
-    document.addEventListener("mousemove",(e)=>{
-        let currentX = e.pageX;
+    console.log("angle",angle);
+    const past = e.pageY + angle;
+    console.log(past);
+    function getMouseDistance(e){
         let currentY = e.pageY;
-        console.log("currentX:",currentX);
-        console.log("currentY:",currentY);
-        let distanceX = currentX - pastX;
-        let distanceY = (currentY - pastY) * -1;
-        console.log("distanceX:",distanceX);
-        console.log("distanceY",distanceY);
-        let mouseDistance = getMouseDistance(distanceX,distanceY);
-        angle = mouseDistance; 
-        console.log("angle:",angle);
-        filterKnob.style.transform = `rotate(${angle}deg)`;                  
-    },angle);
-    
+        let distanceY = (currentY - past) * -1;
+        angle = distanceY;
+        console.log('currentAngle',angle);
+        filterKnob.style.transform = `rotate(${angle}deg)`;
+    };
 
-});
+    document.addEventListener("mousemove",getMouseDistance);
+    
+    function removeListeners(){
+        console.log('up');
+        document.removeEventListener("mousemove",getMouseDistance);
+        document.removeEventListener("mouseup",removeListeners)
+    }
+
+    document.addEventListener("mouseup",removeListeners)
+};
+
 
 
 

@@ -1,0 +1,18 @@
+KNOB ROTATION(try 1)
+
+Knob is clicked:
+mousemove event listener is added
+get mouse coordinates and store them as pastX and pastY
+add a mousemove listener
+store coordinates as currentX and currentY
+subtract pastX from currentX and store as distanceX, same for pastY and currentY
+square distanceX and distanceY add them together and find square root...
+...store them as mouseDistance
+set angle equal to mouseDistance
+set knob rotation to equal angle
+add event listener for mouseup
+On MouseUp:
+remove mousemove listener
+store current knob position
+
+
