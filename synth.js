@@ -61,7 +61,7 @@ document.addEventListener("mousedown",(e)=>{
        buttonTriggerSynth(1,sound,e.target.id)
         }
         console.log(event.target.className);
-        if(event.target.className.baseVal.includes("knob")){
+        if(event.target.className.includes("knob")){
             console.log("knobclicked???");
             turnKnob(e);    
         }
@@ -97,26 +97,14 @@ function buttonTriggerSynth(gate,sound,note,key){
     }
 }
 
-function getMouseDistance(x,y){
-    // let distance = Math.sqrt(
-    //     Math.pow(x, 2) + 
-
-    //     Math.pow(y, 2));
-    let distance;
-
-    if(x < 0){
-        distance = x;
-    }
-    if(x > 0 && y < 0){
-        distance  = y;
-    }
-    
-    
-    return distance;
-}
+//disables default dragging behavior, prenventing knob turning bug 
+document.ondragstart = function(){
+    return false;
+};
 
 function turnKnob(e){
-let knob = e.target;
+let knob = document.getElementsByClassName(e.target.className.split(' ')[0])[0];
+
 console.log("knob",knob);
 let angle = 0;
 
