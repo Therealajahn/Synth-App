@@ -56,12 +56,14 @@ const sound = {
 //buttons trigger synth
 
     
-document.addEventListener("mousedown",()=>{
+document.addEventListener("mousedown",(e)=>{
         if(event.target.className.baseVal === "key"){
-       buttonTriggerSynth(1,sound,event.target.id)
+       buttonTriggerSynth(1,sound,e.target.id)
         }
-        if(event.target.className.baseVal === "knob"){
-            
+        console.log(event.target.className);
+        if(event.target.className.baseVal.includes("knob")){
+            console.log("knobclicked???");
+            turnKnob(e);    
         }
     });
 
@@ -114,7 +116,8 @@ function getMouseDistance(x,y){
 }
 
 function turnKnob(e){
-let filterKnob = document.getElementById('filter-knob');
+let knob = e.target;
+console.log("knob",knob);
 let angle = 0;
 
     console.log("angle",angle);
@@ -125,7 +128,7 @@ let angle = 0;
         let distanceY = (currentY - past) * -1;
         angle = distanceY;
         console.log('currentAngle',angle);
-        filterKnob.style.transform = `rotate(${angle}deg)`;
+        knob.style.transform = `rotate(${angle}deg)`;
     };
 
     document.addEventListener("mousemove",getMouseDistance);

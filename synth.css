@@ -41,7 +41,6 @@ main{
 }
 #volca-base{
     grid-area: face;
-   
 }
 #face-plate {
     grid-area: face;
@@ -51,19 +50,56 @@ main{
     grid: "top" 100px "bottom" 1fr;
 }
 
+/* MAIN KNOBS */
 #main-knobs{
    grid-area: "bottom";
    display: grid;
-   grid: 100% / 60px 60px 90px 60px 60px 50px 50px 60px 50px; 
+   grid: 
+   "octave peak filter lfo-rate lfo-int tune1 tune2 tune3 volume" 100% / 
+   60px 60px 90px 60px 60px 50px 50px 60px 50px; 
    justify-items: center;
    margin-left: 8px;
 }
 
-.osc-tune-knobs{
+
+
+div.octave.knob{
+    grid-area: octave;
+    width: 38px;
+    height: 37px;
+    
+}
+.octave.knob{
+    grid-area: octave;
+}
+.peak.knob{
+    grid-area: peak;
+}
+.filter.knob{
+    grid-area: filter;
+}
+.lfo-rate.knob{
+    grid-area: lfo-rate;
+}
+.lfo-int.knob{
+    grid-area: lfo-int;
+}
+.tune.one.knob{
+    grid-area: tune1;
+}
+.tune.two.knob{
+    grid-area: tune2;
+}
+.tune.three.knob{
+    grid-area: tune3;
+}
+.tune.knob{
     margin-top: 8px;
 }
-
-#filter-knob{
+.volume.knob{
+    grid-area: volume;
+}
+.filter.knob{
     margin-top: -20px;
 }
 
