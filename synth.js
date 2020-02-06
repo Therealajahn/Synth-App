@@ -53,21 +53,26 @@ const sound = {
 
 
 
-//buttons trigger synth
 
-    
-document.addEventListener("mousedown",(e)=>{
-        if(event.target.className.baseVal === "key"){
-       buttonTriggerSynth(1,sound,e.target.id)
-        }
-        console.log(event.target.className);
-        if(event.target.className.includes("knob")){
-            console.log("knobclicked???");
-            turnKnob(e);    
-        }
-    });
 
-document.addEventListener("mouseup",()=>buttonTriggerSynth(0,sound));
+function getElementClass(e){
+   if(e.target.className.baseVal === "key"){
+   buttonTriggerSynth(1,sound,e.target.id)
+   }
+    console.log(e.target.className);
+    if(e.target.className.includes("knob")){
+        // console.log("knobclicked???");
+        turnKnob(e);    
+    }
+} 
+
+
+document.addEventListener("mousedown",
+    getClass);
+
+document.addEventListener("mouseup",()=>{
+    buttonTriggerSynth(0,sound);
+});
 
 document.addEventListener("keydown",()=>buttonTriggerSynth(1,sound,keyboard[event.key],event.key))
 
@@ -107,22 +112,21 @@ let knob = document.getElementsByClassName(e.target.className.split(' ')[0])[0];
 
 console.log("knob",knob);
 let angle = 0;
-
-    console.log("angle",angle);
+    // console.log("angle",angle);
     const past = e.pageY + angle;
     console.log(past);
     function getMouseDistance(e){
         let currentY = e.pageY;
         let distanceY = (currentY - past) * -1;
         angle = distanceY;
-        console.log('currentAngle',angle);
+        // console.log('currentAngle',angle);
         knob.style.transform = `rotate(${angle}deg)`;
     };
 
     document.addEventListener("mousemove",getMouseDistance);
     
     function removeListeners(){
-        console.log('up');
+        // console.log('up');
         document.removeEventListener("mousemove",getMouseDistance);
         document.removeEventListener("mouseup",removeListeners)
     }
@@ -133,31 +137,5 @@ let angle = 0;
 
 
 
- 
-
-
-
-   
-    
-
-
-
-//TODO; get knob drag to work!!!
-
- 
- 
-
-
-
 //control relative pitch of oscillators
 //button to change waveshape
-
-
-
-
-
-
-
-
-
-
