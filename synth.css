@@ -1,6 +1,6 @@
 body{
     
-    background-color: #fff;
+    background-color: #1842E7;
 }
 
 main{
@@ -12,18 +12,12 @@ main{
     "left text right";
 }
 
-#play-button{
+/* #play-button{
     border-left: 100px solid #fff;
     border-top: 50px solid transparent;
     border-bottom: 50px solid
         transparent;
-}
-
-#play-toggle{
-    height: 100px;
-    width: 100px;
-    
-}
+} */
 
 #volca-bass-container{
     grid-area:  middle;

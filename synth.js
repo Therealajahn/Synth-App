@@ -1,12 +1,12 @@
 
 
-//function startAudioContext(){    
-//    document.querySelector('#play-button').addEventListener('click', async () =>{
-//            await Tone.start()
-//    })
-//}
-//
-//startAudioContext();
+function startAudioContext(){    
+   document.querySelector('#play-button').addEventListener('click', async () =>{
+           await Tone.start()
+   })
+}
+
+startAudioContext();
 
 //setup Sound
 //Setup volume
@@ -17,7 +17,7 @@
         frequency : 100,
         rolloff : -12,
         Q : 20,
-        gain : 0
+        gain : 0,
     }).connect(gain);
 //Setup env   
     let env = new Tone.AmplitudeEnvelope({
@@ -47,7 +47,8 @@ const sound = {
     osc1: osc1,
     osc2: osc2,
     osc3: osc3,
-    env: env
+    env: env,
+    gain: gain,
 }
 
 
@@ -59,43 +60,66 @@ function getElementClass(e){
    if(e.target.className.baseVal === "key"){
    buttonTriggerSynth(1,sound,e.target.id)
    }
-    console.log(e.target.className);
-    if(e.target.className.includes("knob")){
+   if(e.target.className.includes("knob")){
         // console.log("knobclicked???");
         turnKnob(e);    
     }
 } 
 
 
+
+function loopTriggerSynth(time,event){
+    updateOscs(event.note);
+    env.triggerAttackRelease(event.dur,time);
+    filtEnv.triggerAttackRelease(event.dur,time);
+};
+
+let sequence = [
+    {time: 0,note:"c4",dur: "4n"},
+    {time: {'4n':2}, note:"c5",dur:"4n"},
+]
+
+let part = new Tone.Part(loopTriggerSynth,sequence)
+part.start(0);
+part.loop = 3;
+part.end = "1m";
+
+
+
+document.getElementById('play-button').addEventListener("mousedown",e => {
+    Tone.Transport.toggle();console.log("yes");
+})
+
 document.addEventListener("mousedown",
-    getClass);
+    getElementClass);
 
 document.addEventListener("mouseup",()=>{
     buttonTriggerSynth(0,sound);
 });
 
-document.addEventListener("keydown",()=>buttonTriggerSynth(1,sound,keyboard[event.key],event.key))
+document.addEventListener("keydown",()=>buttonTriggerSynth(1,keyboard[event.key],event.key))
 
-document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.key],event.key))
+document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],event.key))
 
       
-function updateOscs(note,sound) {
-    const { osc1, osc2, osc3 } = sound
+function updateOscs(note) {
+    const { osc1, osc2, osc3 } = sound;
     osc1.frequency.value = note;
     osc2.frequency.value = osc1.frequency.value + 1;
     osc3.frequency.value = osc1.frequency.value - 1;
 }
 
-function buttonTriggerSynth(gate,sound,note,key){
+function buttonTriggerSynth(gate,note,key){
     const { env } = sound;
     
     if(gate){
        if(key){
-           updateOscs(keyboard[key],sound)
+           updateOscs(keyboard[key])
        }
-        updateOscs(note,sound);
-       env.triggerAttack();
-       filtEnv.triggerAttack();
+        updateOscs(note);
+        env.triggerAttack();
+        filtEnv.triggerAttack();
+       
     }else if (!gate){
         env.triggerRelease();
         filtEnv.triggerRelease();
