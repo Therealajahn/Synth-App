@@ -12,12 +12,12 @@ main{
     "left text right";
 }
 
-/* #play-button{
+#play-button{
     border-left: 100px solid #fff;
     border-top: 50px solid transparent;
     border-bottom: 50px solid
         transparent;
-} */
+}
 
 #volca-bass-container{
     grid-area:  middle;

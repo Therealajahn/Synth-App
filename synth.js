@@ -24,7 +24,7 @@ startAudioContext();
         "attack" : 0.01,
 		"decay" : 0.01,
 		"sustain" : 1,
-		"release" : 5
+		"release" : 0.5
     }).connect(filter);
   
  //Setup filter env      
@@ -32,16 +32,16 @@ startAudioContext();
         "attack" : 0.001,
 		"decay" : 0.01,
 		"sustain" : 0.5,
-		"release" : 2,
+		"release" : 0.5,
         "baseFrequency" : 250,
         "octaves" : 2,
         "exponent" : 1,
     }).connect(filter.frequency);
 //Setup oscs
    
-    let osc1 = new Tone.Oscillator(440,"square").connect(env).start();
-    let osc2 = new Tone.Oscillator(440, "square").connect(env).start();
-    let osc3 = new Tone.Oscillator(440, "square").connect(env).start();
+    let osc1 = new Tone.Oscillator(440,"square").connect(env);
+    let osc2 = new Tone.Oscillator(440, "square").connect(env);
+    let osc3 = new Tone.Oscillator(440, "square").connect(env);
 
 const sound = {
     osc1: osc1,
@@ -68,27 +68,12 @@ function getElementClass(e){
 
 
 
-function loopTriggerSynth(time,event){
-    updateOscs(event.note);
-    env.triggerAttackRelease(event.dur,time);
-    filtEnv.triggerAttackRelease(event.dur,time);
-};
+function animate(time){
+    console.log(time);
+    requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 
-let sequence = [
-    {time: 0,note:"c4",dur: "4n"},
-    {time: {'4n':2}, note:"c5",dur:"4n"},
-]
-
-let part = new Tone.Part(loopTriggerSynth,sequence)
-part.start(0);
-part.loop = 3;
-part.end = "1m";
-
-
-
-document.getElementById('play-button').addEventListener("mousedown",e => {
-    Tone.Transport.toggle();console.log("yes");
-})
 
 document.addEventListener("mousedown",
     getElementClass);
@@ -104,9 +89,12 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],e
       
 function updateOscs(note) {
     const { osc1, osc2, osc3 } = sound;
+   
     osc1.frequency.value = note;
     osc2.frequency.value = osc1.frequency.value + 1;
     osc3.frequency.value = osc1.frequency.value - 1;
+   
+   
 }
 
 function buttonTriggerSynth(gate,note,key){
