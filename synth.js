@@ -60,20 +60,12 @@ function getElementClass(e){
    if(e.target.className.baseVal === "key"){
    buttonTriggerSynth(1,sound,e.target.id)
    }
+   console.log(e.target.className);
    if(e.target.className.includes("knob")){
         // console.log("knobclicked???");
         turnKnob(e);    
     }
 } 
-
-
-
-function animate(time){
-    console.log(time);
-    requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-
 
 document.addEventListener("mousedown",
     getElementClass);
@@ -120,9 +112,8 @@ document.ondragstart = function(){
 };
 
 function turnKnob(e){
-let knob = document.getElementsByClassName(e.target.className.split(' ')[0])[0];
-
-console.log("knob",knob);
+let knob = document.getElementsByClassName(e.target.className.split(' ')[0])[1];
+// console.log("knob",knob);
 let angle = 0;
     // console.log("angle",angle);
     const past = e.pageY + angle;

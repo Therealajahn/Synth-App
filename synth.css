@@ -58,7 +58,6 @@ main{
 
 .octave.knob{
     grid-area: octave;
-    z-index:0;
 }
 .peak.knob{
     grid-area: peak;
@@ -91,17 +90,8 @@ main{
     margin-top: -20px;
 }
 
-/* MAIN KNOB OVERLAY */
-.knob-overlay{
-    grid-area: bottom;
-    display: grid;
-    grid: 
-    "octave peak filter lfo-rate lfo-int tune1 tune2 tune3 volume" 100% / 
-    60px 60px 90px 60px 60px 50px 50px 60px 50px; 
-    justify-items: center;
-    margin-left: 8px;
- }
- 
+/* MAIN KNOB OVERLAYS */
+
  div.octave.knob{
      grid-area: octave;
      width: 38px;
