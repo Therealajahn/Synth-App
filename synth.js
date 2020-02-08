@@ -9,15 +9,23 @@
 // startAudioContext();
 
 //gain
-let gain = new Tone.Gain(0.5).toMaster();
+let gain = new Tone.Gain(0.1).toMaster();
+//volume env
+let env = new Tone.Envelope({
+    "attack" : 0.1,
+    "decay" : 0.2,
+    "sustain" : 1,
+    "release" : 0.8,
+}).connect(gain);
+
 //filter
 let filter = new Tone.Filter({
     type : 'lowpass' ,
-    frequency : 500,
+    frequency : 100,
     rolloff : -12 ,
-    Q : 10,
+    Q : 25,
     gain : 0
-});
+}).connect(gain);
 //noise gen
 let noise = new Tone.Noise("brown").start().connect(filter);
 
@@ -25,19 +33,9 @@ let noise = new Tone.Noise("brown").start().connect(filter);
 let filtEnv = new Tone.FrequencyEnvelope({
     "attack" : 0.2,
     "release" : 0.5,
-    "baseFrequency" : "C2",
-    "octaves" : 4
-}).connect(filter);
-//volume env
-let env = new Tone.Envelope({
-        "attack" : 0.1,
-        "decay" : 0.2,
-        "sustain" : 1,
-        "release" : 0.8,
-}).connect(gain);
-
-
-
+    "baseFrequency" : 300,
+    "octaves" : 2
+}).connect(filter.frequency);
 
 let filterGain = new Tone.Gain(0.5);
 const sound = {
@@ -66,9 +64,9 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],e
 
       
 function updateOscs(gate,note) {
-    const { filter, noise} = sound
+    const { filtEnv, noise} = sound
     if(note){
-        filter.frequency.value = note;
+        filtEnv.baseFrequency = note;
     }
     if(gate){
         noise.start();
@@ -100,6 +98,18 @@ function buttonTriggerSynth(gate,note,key){
     }
 }
 
+function changeValue(knob,angle) {
+    const { filtEnv } = sound;
+    if(knob.className.baseVal.split(' ')[0] === "filter"){
+        filtEnv.baseFrequency = angle + 100 ;
+        console.log("freqVal",angle)
+    }
+    if(knob.className.baseVal.split(' ')[0] === "peak"){
+        filter.Q.value = angle + 100 /10 ;
+        console.log("peak",angle)
+    }
+}
+
 //disables default dragging behavior, prenventing knob turning bug 
 document.ondragstart = function(){
     return false;
@@ -118,6 +128,7 @@ let angle = 0;
         angle = distanceY;
         // console.log('currentAngle',angle);
         knob.style.transform = `rotate(${angle}deg)`;
+        changeValue(knob,angle);
     };
 
     document.addEventListener("mousemove",getMouseDistance);
