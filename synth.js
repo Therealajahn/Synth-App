@@ -67,36 +67,29 @@ function getElementClass(e){
     }
 } 
 
-document.addEventListener("mousedown",
-    getElementClass);
+document.addEventListener("keydown",()=>buttonTriggerSynth(1,sound,keyboard[event.key],event.key))
 
-document.addEventListener("mouseup",()=>{
-    buttonTriggerSynth(0,sound);
-});
-
-document.addEventListener("keydown",()=>buttonTriggerSynth(1,keyboard[event.key],sound));
-
-document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],sound));
+document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.key],event.key))
 
       
-function updateOscs(note) {
-    const { osc1, osc2, osc3 } = sound;
-    console.log(note);
-    console.log(osc1.frequency.value);
+function updateOscs(note,sound) {
+    const { osc1, osc2, osc3 } = sound
     osc1.frequency.value = note;
     osc2.frequency.value = osc1.frequency.value + 1;
     osc3.frequency.value = osc1.frequency.value - 1;
 }
 
-function buttonTriggerSynth(gate,note,sound){
-    const { env, filtEnv } = sound;
+function buttonTriggerSynth(gate,sound,note,key){
+    const { env } = sound;
     
     if(gate){
-        updateOscs(note);
-        env.triggerAttack();
-        filtEnv.triggerAttack();
-       
-}else if (!gate){
+       if(key){
+           updateOscs(keyboard[key],sound)
+       }
+        updateOscs(note,sound);
+       env.triggerAttack();
+       filtEnv.triggerAttack();
+    }else if (!gate){
         env.triggerRelease();
         filtEnv.triggerRelease();
     }
