@@ -1,0 +1,68 @@
+#top{
+    height: 50px;
+    grid-area: top;
+    display: grid;
+    grid: "power envelope midi" 100% /
+    100px 250px 200px;
+}
+
+#plate{
+    grid-area: top;
+}
+#power{
+    grid-area: power;
+}
+#envelope{
+    grid-area: envelope;
+    display: grid;
+    grid: "left-line tempo attack decay eg-int right-line" 100% /
+    5px 60px 60px 60px 60px 5px;
+    align-items: center;
+}
+.tempo{
+    grid-area:tempo;
+    justify-self: center;
+}
+.attack{
+    grid-area:attack;
+    justify-self: center;
+}
+.decay{
+    grid-area:decay;
+    justify-self: center;
+}
+.eg-int{
+    grid-area:eg-int;
+    justify-self: center;
+}
+
+div.tempo{
+    grid-area:tempo;
+    justify-self: center;
+    width:20;
+    height:20;
+}
+div.attack{
+    grid-area:attack;
+    justify-self: center;
+    width:20;
+    height:20;
+}
+div.decay{
+    grid-area:decay;
+    justify-self: center;
+    width:20;
+    height:20;
+}
+div.eg-int{
+    grid-area:eg-int;
+    justify-self: center;
+    width:20;
+    height:20;
+}
+
+
+
+#midi{
+    grid-area: midi;
+}

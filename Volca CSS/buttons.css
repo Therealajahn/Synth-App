@@ -1,0 +1,13 @@
+#buttons{
+    grid-area: buttons;
+    display: grid;
+    grid: "screen memory step play stop vco1 vco2 vco3 func" 100% / 130px 53px 53px 53px 53px 53px 53px 53px 53px; 
+}
+
+#screen{
+    margin-left: 18px;
+}
+
+.button{
+    margin-top:10px;
+}

@@ -1,0 +1,57 @@
+body{
+    
+    background-color: #1842E7;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 30vw 1fr 30vw;
+    grid-template-rows: 80vh 20vh;
+    grid-template-areas: 
+    "left middle right"
+    "left text right";
+}
+
+#play-button{
+    border-left: 100px solid #fff;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid
+        transparent;
+}
+
+#volca-bass-container{
+    grid-area:  middle;
+    display: grid;
+    grid: 40%  60%;  
+}
+
+/* VOLCA BASS */
+
+#volca-bass {
+    width: 572px;
+    height: 334px;
+    grid-area:mod;
+    grid: "face" 210px "keybed" 1fr;
+    display: grid;
+}
+#volca-base{
+    grid-area: face;
+}
+#face-plate {
+    grid-area: face;
+    margin-left: 6px;
+    margin-top: 6px;
+    display: grid;
+    grid: "top" 100px "knobs" 1fr "buttons" 1fr;
+}
+
+
+
+
+
+#text {
+    grid-area:text;
+    text-align: center;
+    align-self: end;
+    color: #fff;
+}
