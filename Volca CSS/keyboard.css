@@ -35,3 +35,25 @@
     grid-area: bottom;
     align-self: end;
 }
+
+div.tempo.knob {
+    width: 20px;
+    height: 20px;
+    z-index:10;
+}
+
+div.attack.knob {
+    width: 20px;
+    height: 20px;
+    z-index:10;
+}
+div.decay.knob {
+    width: 20px;
+    height: 20px;
+    z-index:10;
+}
+div.eg-int.knob {
+    width: 20px;
+    height: 20px;
+    z-index:10;
+}

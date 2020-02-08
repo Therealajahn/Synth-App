@@ -8,53 +8,50 @@
 
 // startAudioContext();
 
-//setup Sound
-//Setup volume
-    let gain = new Tone.Gain(0.1).toMaster();
-//Setup filter
-    let filter = new Tone.Filter({
-        type : 'lowpass',
-        frequency : 100,
-        rolloff : -12,
-        Q : 20,
-        gain : 0,
-    }).connect(gain);
-//Setup env   
-    let env = new Tone.AmplitudeEnvelope({
-        "attack" : 0.01,
-		"decay" : 0.01,
-		"sustain" : 1,
-		"release" : 0.5
-    }).connect(filter);
-  
- //Setup filter env      
-    let filtEnv = new Tone.FrequencyEnvelope({
-        "attack" : 0.001,
-		"decay" : 0.01,
-		"sustain" : 0.5,
-		"release" : 0.5,
-        "baseFrequency" : 250,
-        "octaves" : 2,
-        "exponent" : 1,
-    }).connect(filter.frequency);
-//Setup oscs
-   
-    let osc1 = new Tone.Oscillator(440,"square").connect(env);
-    let osc2 = new Tone.Oscillator(440, "square").connect(env);
-    let osc3 = new Tone.Oscillator(440, "square").connect(env);
+//gain
+let gain = new Tone.Gain(0.5).toMaster();
+//filter
+let filter = new Tone.Filter({
+    type : 'lowpass' ,
+    frequency : 500,
+    rolloff : -12 ,
+    Q : 10,
+    gain : 0
+});
+//noise gen
+let noise = new Tone.Noise("brown").start().connect(filter);
 
+//filter freq env
+let filtEnv = new Tone.FrequencyEnvelope({
+    "attack" : 0.2,
+    "release" : 0.5,
+    "baseFrequency" : "C2",
+    "octaves" : 4
+}).connect(filter);
+//volume env
+let env = new Tone.Envelope({
+        "attack" : 0.1,
+        "decay" : 0.2,
+        "sustain" : 1,
+        "release" : 0.8,
+}).connect(gain);
+
+
+
+
+let filterGain = new Tone.Gain(0.5);
 const sound = {
-    osc1: osc1,
-    osc2: osc2,
-    osc3: osc3,
+    noise: noise,
+    filter: filter,
+    filtEnv: filtEnv,
     env: env,
-    gain: gain,
-}
+};
 
 function getElementClass(e){
    if(e.target.className.baseVal === "key"){
    buttonTriggerSynth(1,sound,e.target.id)
    }
+   console.log(event.target);
    console.log(e.target.className);
    if(e.target.className.includes("knob")){
         // console.log("knobclicked???");
@@ -69,27 +66,21 @@ document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],e
 
       
 function updateOscs(gate,note) {
-    const { osc1, osc2, osc3 } = sound
+    const { filter, noise} = sound
     if(note){
-    osc1.frequency.value = note;
-    osc2.frequency.value = osc1.frequency.value + 1;
-    osc3.frequency.value = osc1.frequency.value - 1;
+        filter.frequency.value = note;
     }
     if(gate){
-        osc1.start();
-        osc2.start();
-        osc3.start();
+        noise.start();
     }else if(gate){
-        osc1.stop();
-        osc2.stop();
-        osc3.stop();
+        noise.stop();
     }
 }
 
 function buttonTriggerSynth(gate,note,key){
     const { env } = sound;
     console.log("trigger",event.key);
-    console.log("gain",gain.gain.value);
+    
     if(gate){
         console.log("envelope attack trigger");
     
@@ -99,12 +90,12 @@ function buttonTriggerSynth(gate,note,key){
        }
        //if button is clicked
         updateOscs(gate,note,sound);
-       env.triggerAttack();
+       env.triggerAttack(); 
        filtEnv.triggerAttack();
     }else if (!gate){
         console.log("envelope release trigger")
-        env.triggerRelease();
         filtEnv.triggerRelease();
+        env.triggerRelease();
         updateOscs(gate);
     }
 }
