@@ -9,35 +9,38 @@
 // startAudioContext();
 
 //gain
-let gain = new Tone.Gain(0.1).toMaster();
-//volume env
-let env = new Tone.Envelope({
-    "attack" : 0.1,
-    "decay" : 0.2,
-    "sustain" : 1,
-    "release" : 0.8,
-}).connect(gain);
+let limiter = new Tone.Limiter(-36).toMaster();
+let filterGain = new Tone.Gain(1).connect(limiter);
 
 //filter
 let filter = new Tone.Filter({
     type : 'lowpass' ,
     frequency : 100,
     rolloff : -12 ,
-    Q : 25,
-    gain : 0
-}).connect(gain);
-//noise gen
-let noise = new Tone.Noise("brown").start().connect(filter);
+    Q : 10,
+    gain : 0,
+}).connect(filterGain);
+let noiseGain = new Tone.Gain(1).connect(filter);
+let noise = new Tone.Noise().connect(noiseGain);
+
+//volume env
+let env = new Tone.Envelope({
+    "attack" : 0.01,
+    "decay" : 0.01,
+    "sustain" : 0.5,
+    "release" : 0.5,
+}).connect(filterGain.gain);
 
 //filter freq env
 let filtEnv = new Tone.FrequencyEnvelope({
-    "attack" : 0.2,
-    "release" : 0.5,
+    "attack" : 0.01,
+    "decay": 0.01,
+    "sutain": 0.02,
+    "release" : 0.03,
     "baseFrequency" : 300,
-    "octaves" : 2
+    "octaves" : 0,
 }).connect(filter.frequency);
 
-let filterGain = new Tone.Gain(0.5);
 const sound = {
     noise: noise,
     filter: filter,
