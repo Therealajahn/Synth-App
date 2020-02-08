@@ -1,16 +1,16 @@
 
 
-function startAudioContext(){    
-   document.querySelector('#play-button').addEventListener('click', async () =>{
-           await Tone.start()
-   })
-}
+// function startAudioContext(){    
+//    document.querySelector('#play-button').addEventListener('click', async () =>{
+//            await Tone.start()
+//    })
+// }
 
-startAudioContext();
+// startAudioContext();
 
 //setup Sound
 //Setup volume
-    let gain = new Tone.Gain(0.05).toMaster();
+    let gain = new Tone.Gain(0.1).toMaster();
 //Setup filter
     let filter = new Tone.Filter({
         type : 'lowpass',
@@ -51,11 +51,6 @@ const sound = {
     gain: gain,
 }
 
-
-
-
-
-
 function getElementClass(e){
    if(e.target.className.baseVal === "key"){
    buttonTriggerSynth(1,sound,e.target.id)
@@ -66,32 +61,51 @@ function getElementClass(e){
         turnKnob(e);    
     }
 } 
+document.addEventListener("mousedown", getElementClass);
 
-document.addEventListener("keydown",()=>buttonTriggerSynth(1,sound,keyboard[event.key],event.key))
+document.addEventListener("keydown",()=>buttonTriggerSynth(1,keyboard[event.key],event.key))
 
-document.addEventListener("keyup",()=>buttonTriggerSynth(0,sound,keyboard[event.key],event.key))
+document.addEventListener("keyup",()=>buttonTriggerSynth(0,keyboard[event.key],event.key))
 
       
-function updateOscs(note,sound) {
+function updateOscs(gate,note) {
     const { osc1, osc2, osc3 } = sound
+    if(note){
     osc1.frequency.value = note;
     osc2.frequency.value = osc1.frequency.value + 1;
     osc3.frequency.value = osc1.frequency.value - 1;
+    }
+    if(gate){
+        osc1.start();
+        osc2.start();
+        osc3.start();
+    }else if(gate){
+        osc1.stop();
+        osc2.stop();
+        osc3.stop();
+    }
 }
 
-function buttonTriggerSynth(gate,sound,note,key){
+function buttonTriggerSynth(gate,note,key){
     const { env } = sound;
-    
+    console.log("trigger",event.key);
+    console.log("gain",gain.gain.value);
     if(gate){
-       if(key){
-           updateOscs(keyboard[key],sound)
+        console.log("envelope attack trigger");
+    
+        //if key is pressed
+        if(key){
+           updateOscs(gate,keyboard[key],sound)
        }
-        updateOscs(note,sound);
+       //if button is clicked
+        updateOscs(gate,note,sound);
        env.triggerAttack();
        filtEnv.triggerAttack();
     }else if (!gate){
+        console.log("envelope release trigger")
         env.triggerRelease();
         filtEnv.triggerRelease();
+        updateOscs(gate);
     }
 }
 
